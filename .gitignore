@@ -1,6 +1,14 @@
+# Node
 node_modules
 build
 npm-debug.log
 .env
-.DS_Store
 
+
+# PHPStorm
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/first-mongo-app.iml
+.idea/inspectionProfiles/Project_Default.xml
