@@ -10,7 +10,10 @@ MongoClient.connect('mongodb://localhost:27017/UsersList', (err, client) => {
     console.log('Connected to MongoDB server');
 
 
-    const db = client.db('Users');
+    /* Select the Database */
+    const db = client.db('TodoApp');
+
+    /* Insert something into it*/
     db.collection('Users').insertOne({
         name: 'Corentin',
         age: 17,

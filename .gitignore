@@ -6,9 +6,4 @@ npm-debug.log
 
 
 # PHPStorm
-.idea/vcs.xml
-.idea/workspace.xml
-.idea/modules.xml
-.idea/misc.xml
-.idea/first-mongo-app.iml
-.idea/inspectionProfiles/Project_Default.xml
+.idea/mais
