@@ -5,26 +5,37 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/TodoApp');
 
 
-var Todo = mongoose.model('Todo', {
+/*var Todo = mongoose.model('Todo', {
    text: {
-       type: String
+       type: String,
+       minlength: 3,
+       trim: true
    } ,
     completed: {
-       type: Boolean
+        type: Boolean,
+        default: false
     },
     completedAt :{
-       type: Number
+       type: Number,
+        default: null
+    }
+});*/
+
+var User = mongoose.model('Users', {
+    email: {
+        type: String,
+        required: true,
+        minlength: 5,
+        trim: true
     }
 });
 
-var newTodo = new Todo({
-    text: 'Learn Angular',
-    completed: true,
-    completedAt: 123
+var newUser = new User({
+   email: 'corentin.grall@gmail.com'
 });
 
-newTodo.save().then((doc) => {
-    console.log(JSON.stringify(doc, undefined, 2));
+newUser.save().then((doc) =>{
+    console.log('User successfully registered !', doc);
 }, (e) => {
-    console.log('Unable to save Todo')
+    console.log('Unable to register User !', e);
 });
