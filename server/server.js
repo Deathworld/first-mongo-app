@@ -1,41 +1,31 @@
-var mongoose = require('mongoose');
+var express = require('express');
+var bodyParser = require('body-parser');
 
+var {mongoose} = require('./db/mongoose');
+var {Todo} = require('./models/todo');
+var {User} = require('./models/user');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/TodoApp');
+var app = express();
 
+app.use(bodyParser.json());
 
-/*var Todo = mongoose.model('Todo', {
-   text: {
-       type: String,
-       minlength: 3,
-       trim: true
-   } ,
-    completed: {
-        type: Boolean,
-        default: false
-    },
-    completedAt :{
-       type: Number,
-        default: null
-    }
-});*/
+app.post('/todos', (req, res) => {
+    var todo = new Todo({
+       text: req.body.text
+    });
 
-var User = mongoose.model('Users', {
-    email: {
-        type: String,
-        required: true,
-        minlength: 5,
-        trim: true
-    }
+    todo.save().then((doc) => {
+        res.send(doc);
+    }, (e) => {
+        res.status(400).send(e);
+    });
 });
 
-var newUser = new User({
-   email: 'corentin.grall@gmail.com'
+app.get('/', (req, res) => {
+   res.render()
 });
 
-newUser.save().then((doc) =>{
-    console.log('User successfully registered !', doc);
-}, (e) => {
-    console.log('Unable to register User !', e);
+
+app.listen(3000, () => {
+    console.log('Express server started on port 3000');
 });
