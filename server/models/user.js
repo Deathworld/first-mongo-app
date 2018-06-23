@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-
+/* The User model */
 var User = mongoose.model('Users', {
     email: {
         type: String,

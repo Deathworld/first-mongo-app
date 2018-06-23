@@ -7,8 +7,10 @@ var {User} = require('./models/user');
 
 var app = express();
 
+/* Define the page renderer to Body Parser */
 app.use(bodyParser.json());
 
+/* Create a new todo from request's text */
 app.post('/todos', (req, res) => {
     var todo = new Todo({
        text: req.body.text
@@ -21,11 +23,11 @@ app.post('/todos', (req, res) => {
     });
 });
 
-app.get('/', (req, res) => {
-   res.render()
-});
 
-
+/* Run Express on port 3000 */
 app.listen(3000, () => {
     console.log('Express server started on port 3000');
 });
+
+/* Export the Express application*/
+module.exports = {app};

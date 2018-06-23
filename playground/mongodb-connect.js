@@ -2,6 +2,7 @@
 const {MongoClient, ObjectID} = require('mongodb');
 
 
+/* Connect to UsersList Database*/
 MongoClient.connect('mongodb://localhost:27017/UsersList', (err, client) => {
     console.log('Connecting to MongoDB server');
     if(err){
