@@ -23,6 +23,14 @@ app.post('/todos', (req, res) => {
     });
 });
 
+/* Return every todos */
+app.get('/todos', (req, res) => {
+    Todo.find().then((todos) => {
+        res.send({todos});
+    }, (e) => {
+        res.status(400).send(e);
+    });
+});
 
 /* Run Express on port 3000 */
 app.listen(3000, () => {
