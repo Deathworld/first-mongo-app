@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
@@ -23,6 +24,11 @@ app.post('/todos', (req, res) => {
     });
 });
 
+/* Home */
+app.get('/', (req, res) => {
+    res.send('Welcome to this beautiful webpage !');
+});
+
 /* Return every todos */
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
@@ -30,6 +36,32 @@ app.get('/todos', (req, res) => {
     }, (e) => {
         res.status(400).send(e);
     });
+});
+
+/* GET /todos/1234 */
+app.get('/todos/:id', (req, res) => {
+    var id = req.params.id;
+
+    if(!ObjectID.isValid(id)){
+        //return res.status(400).send();
+        return res.send(JSON.stringify({
+            code: 404,
+            error: 'Incorrect ID'
+        }));
+    }
+
+    Todo.findById(id).then((todo) => {
+        if(!todo) {
+            return res.send(JSON.stringify({
+                code: 404,
+                error: 'ID not found'
+            }));
+        }
+        return res.send(JSON.stringify(todo));
+    }).catch((e) => res.send(JSON.stringify({
+        code: 500,
+        error: e.message
+    })));
 });
 
 /* Run Express on port 3000 */
