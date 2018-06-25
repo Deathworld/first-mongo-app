@@ -57,7 +57,7 @@ app.get('/todos/:id', (req, res) => {
                 error: 'ID not found'
             }));
         }
-        return res.send(JSON.stringify(todo));
+        return res.send({todo});
     }).catch((e) => res.send(JSON.stringify({
         code: 500,
         error: e.message
