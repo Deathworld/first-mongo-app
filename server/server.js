@@ -46,7 +46,7 @@ app.get('/todos/:id', (req, res) => {
     var id = req.params.id;
 
     if(!ObjectID.isValid(id)){
-        //return res.status(400).send();
+        //return res.status(404).send();
         return res.send(JSON.stringify({
             code: 404,
             error: 'Incorrect ID'
@@ -61,10 +61,9 @@ app.get('/todos/:id', (req, res) => {
             }));
         }
         return res.send({todo});
-    }).catch((e) => res.send(JSON.stringify({
-        code: 500,
-        error: e.message
-    })));
+    }).catch((e) => {
+        res.status(400).send();
+    });
 });
 
 app.delete('/todos/:id', (req, res) => {
@@ -72,37 +71,29 @@ app.delete('/todos/:id', (req, res) => {
     var id = req.params.id;
 
     if(!ObjectID.isValid(id)){
-        return res.send(JSON.stringify({
-            code: 404,
-            error: 'Incorrect ID'
-        }));
+        return res.status(404).send();
+
     }
 
     Todo.findByIdAndRemove(id).then((todo) => {
         if(!todo) {
-            return res.send(JSON.stringify({
-                code: 404,
-                error: 'ID not found'
-            }));
+            return  res.status(404).send();
+
         }
         return res.send({todo});
-    }).catch((e) => res.send(JSON.stringify({
-        code: 500,
-        error: e.message
-    })));
+    }).catch((e) => {
+        res.status(400).send();
+    });
 });
 
 /* Update a Todo */
-app.patch('/todos/id', (req, res) => {
+app.patch('/todos/:id', (req, res) => {
    var id = req.params.id;
    /* Get args*/
    var body = _.pick(req.body, ['text', 'completed']);
 
    if(!ObjectID.isValid(id)) {
-       return res.send(JSON.stringify({
-           code: 404,
-           error: 'Incorrect ID'
-       }));
+       return res.status(404).send();
    }
 
    /* Check args*/
@@ -115,17 +106,14 @@ app.patch('/todos/id', (req, res) => {
 
    Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo) => {
        if(!todo) {
-           return res.send(JSON.stringify({
-               code: 404,
-               error: 'ID not found'
-           }));
+           return res.status(404).send();
+
        }
 
        res.send({todo});
-   }).catch((e) => res.send(JSON.stringify({
-       code: 500,
-       error: e.message
-   })));
+   }).catch((e) => {
+       res.status(400).send();
+   });
 });
 
 /* Run Express on port 3000 */
