@@ -84,10 +84,7 @@ app.delete('/todos/:id', (req, res) => {
                 error: 'ID not found'
             }));
         }
-        return res.send(JSON.stringify({
-            code: 200,
-            message: `Successfully deleted Todo : ${todo.text}`
-        }));
+        return res.send({todo});
     }).catch((e) => res.send(JSON.stringify({
         code: 500,
         error: e.message
