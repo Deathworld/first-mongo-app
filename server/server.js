@@ -36,7 +36,8 @@ app.get('/', (req, res) => {
         port,
         environment: process.env.NODE_ENV,
         mongo_hostname: mongoose.connection.host,
-        mongo_database: mongoose.connection.db.name
+        mongo_database: mongoose.connection.db.name,
+        information: "You're running on Test branch!"
     }
 
     if(process.env.MONGODB_ADDON_DB){
