@@ -35,6 +35,7 @@ app.get('/', (req, res) => {
     var information = {
         port,
         environment: process.env.NODE_ENV,
+        current_commit: "undefined",
         mongo_hostname: mongoose.connection.host,
         mongo_database: mongoose.connection.db.name
     }
@@ -43,6 +44,10 @@ app.get('/', (req, res) => {
         information.mongo_database = "undefined";
     } else if(process.env.MONGODB_ADDON_DB){
         information.mongo_database = process.env.MONGODB_ADDON_DB;
+    }
+
+    if(process.env.COMMIT_ID){
+        information.current_commit = process.env.COMMIT_ID;
     }
 
     res.send(JSON.stringify({information}));
