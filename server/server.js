@@ -31,7 +31,21 @@ app.post('/todos', (req, res) => {
 
 /* Home */
 app.get('/', (req, res) => {
-    res.send('Welcome to this beautiful webpage !');
+
+    var information = {
+        port,
+        environment: process.env.NODE_ENV,
+        mongo_hostname: mongoose.connection.host,
+        mongo_database: mongoose.connection.db.name
+    }
+
+    if(!mongoose.connection.db.name){
+        information.mongo_database = "undefined";
+    } else if(process.env.MONGODB_ADDON_DB){
+        information.mongo_database = process.env.MONGODB_ADDON_DB;
+    }
+
+    res.send(JSON.stringify({information}));
 });
 
 /* Return every todos */
