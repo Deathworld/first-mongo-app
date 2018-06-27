@@ -40,10 +40,10 @@ app.get('/', (req, res) => {
         mongo_database: mongoose.connection.db.name
     }
 
-    if(!mongoose.connection.db.name){
-        information.mongo_database = "undefined";
-    } else if(process.env.MONGODB_ADDON_DB){
+    if(process.env.MONGODB_ADDON_DB){
         information.mongo_database = process.env.MONGODB_ADDON_DB;
+    } else if(!mongoose.connection.db.name){
+        information.mongo_database = "undefined";
     }
 
     if(process.env.COMMIT_ID){
