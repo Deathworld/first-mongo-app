@@ -1,4 +1,4 @@
-var env = process.env.NODE_ENV || 'development';
+require('./config/config');
 
 const _ = require('lodash');
 const express = require('express');
