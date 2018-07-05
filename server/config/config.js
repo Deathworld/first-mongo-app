@@ -1,5 +1,9 @@
 var env = process.env.NODE_ENV || 'development';
 
+if(env !== 'test' && env !== 'development'){
+    env = "development";
+    process.end.NODE_ENV = env;
+}
 
 if(env === 'test' && process.env.MONGODB_URI){
     process.env.MONGODB_URI = process.env.MONGODB_URI_TEST
