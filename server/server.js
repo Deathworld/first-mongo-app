@@ -151,6 +151,16 @@ app.post('/users', (req, res) => {
     });
 });
 
+
+// GET /users
+app.get('/users', (req, res) => {
+   User.find().then((user) => {
+       res.send({user});
+   }, (e) => {
+       res.status(400).send(e);
+   })
+});
+
 /* Run Express on port 3000 */
 app.listen(port, () => {
     console.log(`Express server started on port ${port}`);
