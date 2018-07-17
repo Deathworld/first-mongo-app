@@ -167,6 +167,11 @@ app.post('/users', (req, res) => {
     })
 });
 
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
+});
+
+
 
 // GET /users
 app.get('/users', (req, res) => {
@@ -181,16 +186,10 @@ app.get('/users', (req, res) => {
 
 
 
-app.get('/users/me', authenticate, (req, res) => {
-    res.send(req.user);
-});
-
 /* Run Express on port 3000 */
 app.listen(port, () => {
     console.log(`Express server started on port ${port}`);
 });
 
 /* Export the Express application*/
-module.exports = {
-    app
-};
+module.exports = {app};
