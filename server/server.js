@@ -161,8 +161,10 @@ app.post('/users', (req, res) => {
     user.save().then(() => {
         return user.generateAuthToken();
     }).then((token) => {
+        //  Return header from the generated auth token
         res.header('x-auth', token).send(user);
     }).catch((e) => {
+        // Called if email isn't unique
         res.status(400).send(e);
     })
 });
