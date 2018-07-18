@@ -198,9 +198,17 @@ app.post('/users/login', (req, res) => {
         res.status(400).send();
     });
 
-
-
 });
+
+// DELETE /users/me/token for log out users
+app.delete('/users/me/token', authenticate, (req, res) => {
+    req.user.removeToken(req.token).then(() => {
+        res.status(200).send();
+    }, () => {
+        res.status(400).send();
+    })
+});
+
 
 /* Run Express on port 3000 */
 app.listen(port, () => {

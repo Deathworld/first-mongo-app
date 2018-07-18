@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
+//  The User schema
 var UserSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -33,6 +34,7 @@ var UserSchema = new mongoose.Schema({
   }]
 });
 
+// Convert the User to a JSON Object
 UserSchema.methods.toJSON = function () {
   var user = this;
   var userObject = user.toObject();
@@ -40,6 +42,7 @@ UserSchema.methods.toJSON = function () {
   return _.pick(userObject, ['_id', 'email']);
 };
 
+//  Generate user's auth token (-> login this player)
 UserSchema.methods.generateAuthToken = function () {
   var user = this;
   var access = 'auth';
@@ -52,6 +55,7 @@ UserSchema.methods.generateAuthToken = function () {
   });
 };
 
+//  Find an user by credentials given
 UserSchema.statics.findByCredentials = function (email, password) {
   var User = this;
 
@@ -72,6 +76,17 @@ UserSchema.statics.findByCredentials = function (email, password) {
   });
 };
 
+//  Log out an user
+UserSchema.methods.removeToken = function (token) {
+  var user = this;
+  return user.update({
+    $pull: {
+      tokens: {token}
+    }
+  })
+};
+
+//  Find an user by his token
 UserSchema.statics.findByToken = function (token) {
   var User = this;
   var decoded;
@@ -90,6 +105,7 @@ UserSchema.statics.findByToken = function (token) {
   });
 }
 
+//  Hash user's password before saving it to the Database
 UserSchema.pre('save', function (next) {
   var user = this;
 
