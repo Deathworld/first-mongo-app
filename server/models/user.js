@@ -86,6 +86,19 @@ UserSchema.methods.removeToken = function (token) {
   })
 };
 
+UserSchema.statics.findByEmail = function (email, callback) {
+
+  var User = this; 
+
+   User.find({email}, (err, user) => {
+    if(err){
+      return callback(err, null);
+    } else{
+      return callback(null, user[0]);
+    }
+   });
+}
+
 //  Find an user by his token
 UserSchema.statics.findByToken = function (token) {
   var User = this;
